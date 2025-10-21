@@ -17,7 +17,18 @@
       "Bash(dotnet add package:*)",
       "Bash(mv:*)",
       "Bash(dotnet build:*)",
-      "Bash(dotnet test:*)"
+      "Bash(dotnet test:*)",
+      "Bash(test:*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet list:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(where:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cmd /c \"for %I in (\"\"C:\\Users\\joshua\\Desktop\\日文app-AI\\japanese-practice-js\\models\\mistral-7b-instruct-v0.2.Q4_K_M.gguf\"\") do @echo %~sI\")",
+      "Bash(taskkill:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell:*)"
     ],
     "deny": [],
     "ask": []

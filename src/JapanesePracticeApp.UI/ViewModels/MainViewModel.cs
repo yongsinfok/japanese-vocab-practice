@@ -5,36 +5,81 @@ using JapanesePracticeApp.Core.Services;
 namespace JapanesePracticeApp.UI.ViewModels;
 
 /// <summary>
+/// Practice mode enum - Only Vocabulary mode supported.
+/// </summary>
+public enum PracticeMode
+{
+    Vocabulary
+}
+
+/// <summary>
 /// View model for the main window.
 /// </summary>
 public class MainViewModel : ViewModelBase
 {
-    private readonly QuestionGenerationService _questionService;
-    private GrammarQuestion? _currentQuestion;
+    private readonly IVocabularyService _vocabularyService;
+    private VocabularyItem? _currentVocabulary;
     private string _userAnswer = string.Empty;
     private string _feedbackMessage = string.Empty;
     private bool _isLoading;
-    private bool _isInitialized;
+    private PracticeMode _practiceMode = PracticeMode.Vocabulary;
+    private int _selectedWeek = 1;
+    private List<int> _availableWeeks = new List<int>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
     /// </summary>
-    /// <param name="questionService">The question generation service.</param>
-    public MainViewModel(QuestionGenerationService questionService)
+    /// <param name="vocabularyService">The vocabulary service.</param>
+    public MainViewModel(IVocabularyService vocabularyService)
     {
-        _questionService = questionService ?? throw new ArgumentNullException(nameof(questionService));
+        _vocabularyService = vocabularyService ?? throw new ArgumentNullException(nameof(vocabularyService));
 
-        LoadQuestionCommand = new RelayCommand(async () => await LoadNewQuestionAsync(), () => _isInitialized && !_isLoading);
+        LoadQuestionCommand = new RelayCommand(async () => await LoadNewQuestionAsync(), () => !_isLoading);
         SubmitAnswerCommand = new RelayCommand(SubmitAnswer, () => !string.IsNullOrWhiteSpace(_userAnswer) && !_isLoading);
     }
 
     /// <summary>
-    /// Gets the current question being displayed.
+    /// Initializes the view model by loading available weeks and loads the first question.
     /// </summary>
-    public GrammarQuestion? CurrentQuestion
+    public async Task InitializeAsync()
     {
-        get => _currentQuestion;
-        private set => SetProperty(ref _currentQuestion, value);
+        try
+        {
+            IsLoading = true;
+            FeedbackMessage = "Loading vocabulary data...";
+
+            AvailableWeeks = await _vocabularyService.GetAvailableWeeksAsync();
+            if (AvailableWeeks.Count > 0)
+            {
+                // Set the field directly to avoid triggering the property setter
+                _selectedWeek = AvailableWeeks[0];
+                OnPropertyChanged(nameof(SelectedWeek));
+
+                // Automatically load the first question on startup
+                await LoadNewQuestionAsync();
+            }
+            else
+            {
+                FeedbackMessage = "No vocabulary data available.";
+            }
+        }
+        catch (Exception ex)
+        {
+            FeedbackMessage = $"Error loading vocabulary: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    /// <summary>
+    /// Gets the current vocabulary item being displayed.
+    /// </summary>
+    public VocabularyItem? CurrentVocabulary
+    {
+        get => _currentVocabulary;
+        private set => SetProperty(ref _currentVocabulary, value);
     }
 
     /// <summary>
@@ -78,6 +123,70 @@ public class MainViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets the current practice mode.
+    /// </summary>
+    public PracticeMode PracticeMode
+    {
+        get => _practiceMode;
+        private set => SetProperty(ref _practiceMode, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the selected week number for vocabulary practice.
+    /// </summary>
+    public int SelectedWeek
+    {
+        get => _selectedWeek;
+        set
+        {
+            if (SetProperty(ref _selectedWeek, value))
+            {
+                // Automatically load a new question when week changes
+                _ = LoadNewQuestionAsync();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the list of available weeks.
+    /// </summary>
+    public List<int> AvailableWeeks
+    {
+        get => _availableWeeks;
+        private set => SetProperty(ref _availableWeeks, value);
+    }
+
+    /// <summary>
+    /// Gets the display text for the current question.
+    /// </summary>
+    public string QuestionDisplay
+    {
+        get
+        {
+            if (CurrentVocabulary != null)
+            {
+                return CurrentVocabulary.ChineseText;
+            }
+            return "Click 'Load Question' to start";
+        }
+    }
+
+    /// <summary>
+    /// Gets the hint text for the current question.
+    /// </summary>
+    public string HintDisplay
+    {
+        get
+        {
+            if (CurrentVocabulary != null && !string.IsNullOrEmpty(CurrentVocabulary.Hint))
+            {
+                return $"Hint: {CurrentVocabulary.Hint}";
+            }
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
     /// Gets the command to load a new question.
     /// </summary>
     public ICommand LoadQuestionCommand { get; }
@@ -87,46 +196,29 @@ public class MainViewModel : ViewModelBase
     /// </summary>
     public ICommand SubmitAnswerCommand { get; }
 
-    /// <summary>
-    /// Initializes the view model by setting up the question service.
-    /// </summary>
-    /// <param name="modelPath">The path to the LLM model file.</param>
-    public async Task InitializeAsync(string modelPath)
-    {
-        try
-        {
-            IsLoading = true;
-            FeedbackMessage = "Initializing AI model...";
-
-            await _questionService.InitializeAsync(modelPath);
-            _isInitialized = true;
-
-            FeedbackMessage = "Ready! Click 'Load Question' to start.";
-            ((RelayCommand)LoadQuestionCommand).RaiseCanExecuteChanged();
-        }
-        catch (Exception ex)
-        {
-            FeedbackMessage = $"Error initializing: {ex.Message}";
-        }
-        finally
-        {
-            IsLoading = false;
-        }
-    }
 
     /// <summary>
-    /// Loads a new grammar question.
+    /// Loads a new vocabulary question.
     /// </summary>
     private async Task LoadNewQuestionAsync()
     {
         try
         {
             IsLoading = true;
-            FeedbackMessage = "Generating question...";
             UserAnswer = string.Empty;
+            FeedbackMessage = "Loading vocabulary...";
 
-            CurrentQuestion = await _questionService.GenerateQuestionAsync();
+            CurrentVocabulary = await _vocabularyService.GetRandomVocabularyItemAsync(SelectedWeek);
+
+            if (CurrentVocabulary == null)
+            {
+                FeedbackMessage = $"No vocabulary found for week {SelectedWeek}. Please check your data files.";
+                return;
+            }
+
             FeedbackMessage = string.Empty;
+            OnPropertyChanged(nameof(QuestionDisplay));
+            OnPropertyChanged(nameof(HintDisplay));
         }
         catch (Exception ex)
         {
@@ -139,27 +231,41 @@ public class MainViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Submits and checks the user's answer.
+    /// Submits and checks the vocabulary answer.
     /// </summary>
-    private void SubmitAnswer()
+    private async void SubmitAnswer()
     {
-        if (CurrentQuestion == null)
+        if (CurrentVocabulary == null)
         {
             return;
         }
 
-        var isCorrect = string.Equals(
-            UserAnswer.Trim(),
-            CurrentQuestion.CorrectAnswer.Trim(),
-            StringComparison.OrdinalIgnoreCase);
+        var userAnswerTrimmed = UserAnswer.Trim();
+
+        // Check if the answer matches the main answer or any alternative answers
+        var isCorrect = string.Equals(userAnswerTrimmed, CurrentVocabulary.JapaneseAnswer, StringComparison.OrdinalIgnoreCase) ||
+                        CurrentVocabulary.AlternativeAnswers.Any(alt =>
+                            string.Equals(userAnswerTrimmed, alt, StringComparison.OrdinalIgnoreCase));
 
         if (isCorrect)
         {
-            FeedbackMessage = $"Correct! {CurrentQuestion.Explanation ?? ""}";
+            FeedbackMessage = $"Correct! The answer is: {CurrentVocabulary.JapaneseAnswer}";
+            if (CurrentVocabulary.AlternativeAnswers.Count > 0)
+            {
+                FeedbackMessage += $" (Also acceptable: {string.Join(", ", CurrentVocabulary.AlternativeAnswers)})";
+            }
+
+            // Auto-load next question after a short delay to show the feedback
+            await Task.Delay(1500);
+            await LoadNewQuestionAsync();
         }
         else
         {
-            FeedbackMessage = $"Incorrect. The correct answer is: {CurrentQuestion.CorrectAnswer}. {CurrentQuestion.Explanation ?? ""}";
+            FeedbackMessage = $"Incorrect. The correct answer is: {CurrentVocabulary.JapaneseAnswer}";
+            if (CurrentVocabulary.AlternativeAnswers.Count > 0)
+            {
+                FeedbackMessage += $" (Also acceptable: {string.Join(", ", CurrentVocabulary.AlternativeAnswers)})";
+            }
         }
     }
 }

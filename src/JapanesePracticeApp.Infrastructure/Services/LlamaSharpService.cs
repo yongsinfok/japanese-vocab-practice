@@ -2,6 +2,9 @@ using JapanesePracticeApp.Core.Models;
 using JapanesePracticeApp.Core.Services;
 using LLama;
 using LLama.Common;
+using LLama.Native;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace JapanesePracticeApp.Infrastructure.Services;
 
@@ -14,8 +17,25 @@ public class LlamaSharpService : ILlmService
     private LLamaContext? _context;
     private bool _isInitialized;
 
+    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern int GetShortPathName(string lpszLongPath, StringBuilder lpszShortPath, int cchBuffer);
+
     /// <inheritdoc/>
     public bool IsInitialized => _isInitialized;
+
+    /// <summary>
+    /// Converts a long path with Unicode characters to Windows short path (8.3 format)
+    /// </summary>
+    private static string GetShortPath(string longPath)
+    {
+        var shortPath = new StringBuilder(255);
+        var result = GetShortPathName(longPath, shortPath, shortPath.Capacity);
+        if (result == 0)
+        {
+            return longPath; // Fallback to long path if conversion fails
+        }
+        return shortPath.ToString();
+    }
 
     /// <inheritdoc/>
     public async Task InitializeAsync(string modelPath)
@@ -30,17 +50,44 @@ public class LlamaSharpService : ILlmService
             throw new FileNotFoundException($"Model file not found: {modelPath}");
         }
 
+        // Convert to short path to handle Unicode characters in path
+        var shortModelPath = GetShortPath(modelPath);
+
         await Task.Run(() =>
         {
-            var parameters = new ModelParams(modelPath)
+            try
             {
-                ContextSize = 2048,
-                GpuLayerCount = 0 // CPU only, set higher for GPU acceleration
-            };
+                // Configure native library loading for better diagnostics
+                NativeLibraryConfig
+                    .All
+                    .WithLogCallback((level, message) =>
+                    {
+                        Console.WriteLine($"[{level}] {message}");
+                    });
 
-            _model = LLamaWeights.LoadFromFile(parameters);
-            _context = _model.CreateContext(parameters);
-            _isInitialized = true;
+                var parameters = new ModelParams(shortModelPath)
+                {
+                    ContextSize = 512, // Reduced context size to lower memory requirements
+                    GpuLayerCount = 0 // CPU only, set higher for GPU acceleration
+                };
+
+                _model = LLamaWeights.LoadFromFile(parameters);
+                _context = _model.CreateContext(parameters);
+                _isInitialized = true;
+            }
+            catch (DllNotFoundException dllEx)
+            {
+                throw new InvalidOperationException($"Native library not found. This usually means Visual C++ Runtime is missing. Install VC++ 2015-2022 Redistributable (x64). Details: {dllEx.Message}", dllEx);
+            }
+            catch (BadImageFormatException imgEx)
+            {
+                throw new InvalidOperationException($"Native library architecture mismatch. Make sure you're running as x64. Details: {imgEx.Message}", imgEx);
+            }
+            catch (Exception ex)
+            {
+                var innerMsg = ex.InnerException != null ? $" Inner: {ex.InnerException.Message}" : "";
+                throw new InvalidOperationException($"Failed to load model '{modelPath}'. Error: {ex.GetType().Name} - {ex.Message}{innerMsg}", ex);
+            }
         });
     }
 
@@ -66,8 +113,14 @@ EXPLANATION: The particle 'に' indicates the direction of movement towards a de
 
 Now generate a new question:";
 
-        var executor = new InteractiveExecutor(_context);
-        var inferenceParams = new InferenceParams();
+        // Use StatelessExecutor instead of InteractiveExecutor to avoid state management issues
+        var executor = new StatelessExecutor(_model, _context.Params);
+
+        var inferenceParams = new InferenceParams
+        {
+            MaxTokens = 300,  // Limit the number of tokens to generate
+            AntiPrompts = new List<string> { "Now generate" }  // Stop at certain phrases
+        };
 
         var responseBuilder = new System.Text.StringBuilder();
 
