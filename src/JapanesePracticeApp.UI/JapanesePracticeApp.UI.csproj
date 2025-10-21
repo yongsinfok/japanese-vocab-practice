@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\JapanesePracticeApp.Core\JapanesePracticeApp.Core.csproj" />
+    <ProjectReference Include="..\JapanesePracticeApp.Infrastructure\JapanesePracticeApp.Infrastructure.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
