@@ -8,9 +8,9 @@
 | UI Framework | WPF | Confirmed |
 | Data Handling | System.Text.Json | Confirmed |
 | Persistence | JSON files | Confirmed |
-| AI Integration | Local LLM | NEEDS CLARIFICATION |
-| LLM API/SDK | TBD | NEEDS CLARIFICATION |
-| Project Structure | TBD | NEEDS CLARIFICATION |
+| AI Integration | Local LLM | **BLOCKED** - Research needed |
+| LLM API/SDK | TBD | **BLOCKED** - Research needed |
+| Project Structure | MVVM | Confirmed |
 
 ## Constitution Check
 

@@ -30,11 +30,13 @@ The implementation will follow an incremental approach, starting with a Minimum 
 - [ ] T011 [US1] Implement the question generation logic in `Services/QuestionGenerationService.cs`, using the `ILlmService` interface.
 - [ ] T012 [US1] Implement logic in `ViewModels/MainViewModel.cs` to use the `QuestionGenerationService` to fetch and display a question.
 - [ ] T013 [US1] Bind the `Views/MainWindow.xaml` to the `ViewModels/MainViewModel.cs`.
+- [ ] T014 [US1] Write unit tests for `ViewModels/MainViewModel.cs` to verify question loading and display logic.
+- [ ] T015 [US1] Write unit tests for `Services/QuestionGenerationService.cs` to verify its interaction with the LLM service interface.
 
 ## Phase 4: Polish & Cross-Cutting Concerns
 
-- [ ] T014 Add basic error handling for file I/O and service calls.
-- [ ] T015 Add initial comments and XML documentation to public methods and classes.
+- [ ] T016 Add basic error handling for file I/O and service calls.
+- [ ] T017 Add initial comments and XML documentation to public methods and classes.
 
 ## Dependencies
 
