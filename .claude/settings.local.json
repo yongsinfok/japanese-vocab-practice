@@ -10,7 +10,10 @@
       "Bash(.specify/scripts/powershell/check-prerequisites.ps1:*)",
       "SlashCommand(/speckit.analyze)",
       "Bash(dotnet new:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(dotnet sln add:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet add reference:*)"
     ],
     "deny": [],
     "ask": []
