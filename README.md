@@ -29,7 +29,7 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/yongsinfok/japanese-vocab-practice.git
    cd japanese-practice-js
    ```
 
