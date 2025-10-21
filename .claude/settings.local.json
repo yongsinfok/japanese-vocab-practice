@@ -7,7 +7,8 @@
       "Bash(powershell.exe:*)",
       "Bash(cat:*)",
       "WebSearch",
-      "Bash(.specify/scripts/powershell/check-prerequisites.ps1:*)"
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1:*)",
+      "SlashCommand(/speckit.analyze)"
     ],
     "deny": [],
     "ask": []
