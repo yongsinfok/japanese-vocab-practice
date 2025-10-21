@@ -7,7 +7,8 @@
         xmlns:vm="clr-namespace:JapanesePracticeApp.UI.ViewModels"
         mc:Ignorable="d"
         Title="Japanese Practice App" Height="600" Width="700"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackgroundBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,9 +16,12 @@
         </Grid.RowDefinitions>
 
         <!-- Menu Bar -->
-        <Menu Grid.Row="0">
+        <Menu Grid.Row="0" Background="{DynamicResource MenuBackgroundBrush}" Foreground="{DynamicResource MenuForegroundBrush}">
             <MenuItem Header="Tools">
                 <MenuItem Header="Manage Datasets..." Click="ManageDatasets_Click"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Toggle Theme" Click="ToggleTheme_Click"/>
             </MenuItem>
         </Menu>
 
@@ -40,7 +44,8 @@
                    FontSize="24"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
-                   Margin="0,0,0,15"/>
+                   Margin="0,0,0,15"
+                   Foreground="{DynamicResource PrimaryTextBrush}"/>
 
         <!-- Mode Selection - Removed, only Vocabulary Practice -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15" Visibility="Collapsed">
@@ -51,45 +56,54 @@
             <TextBlock Text="Week:"
                        VerticalAlignment="Center"
                        FontSize="14"
-                       Margin="0,0,10,0"/>
+                       Margin="0,0,10,0"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
             <ComboBox ItemsSource="{Binding AvailableWeeks}"
                       SelectedItem="{Binding SelectedWeek}"
                       Width="100"
                       Height="30"
                       FontSize="14"
-                      Margin="0,0,30,0"/>
+                      Margin="0,0,30,0"
+                      Background="{DynamicResource ComboBoxBackgroundBrush}"
+                      Foreground="{DynamicResource PrimaryTextBrush}"
+                      BorderBrush="{DynamicResource TextBoxBorderBrush}"/>
 
             <TextBlock Text="Difficulty:"
                        VerticalAlignment="Center"
                        FontSize="14"
-                       Margin="0,0,10,0"/>
+                       Margin="0,0,10,0"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
             <ComboBox ItemsSource="{Binding DifficultyLevels}"
                       SelectedItem="{Binding SelectedDifficulty}"
                       Width="120"
                       Height="30"
-                      FontSize="14"/>
+                      FontSize="14"
+                      Background="{DynamicResource ComboBoxBackgroundBrush}"
+                      Foreground="{DynamicResource PrimaryTextBrush}"
+                      BorderBrush="{DynamicResource TextBoxBorderBrush}"/>
         </StackPanel>
 
         <!-- Question Display -->
         <Border Grid.Row="3"
-                BorderBrush="LightGray"
+                BorderBrush="{DynamicResource BorderBrush}"
                 BorderThickness="2"
                 CornerRadius="5"
                 Padding="20"
-                Background="WhiteSmoke">
+                Background="{DynamicResource PanelBackgroundBrush}">
             <StackPanel>
                 <TextBlock Text="{Binding QuestionDisplay}"
                            FontSize="28"
                            TextWrapping="Wrap"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           Margin="0,0,0,10"/>
+                           Margin="0,0,0,10"
+                           Foreground="{DynamicResource PrimaryTextBrush}"/>
                 <TextBlock Text="{Binding HintDisplay}"
                            FontSize="14"
                            TextWrapping="Wrap"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           Foreground="Gray"
+                           Foreground="{DynamicResource SecondaryTextBrush}"
                            FontStyle="Italic"/>
             </StackPanel>
         </Border>
@@ -99,12 +113,16 @@
             <TextBlock Text="Your Answer:"
                        VerticalAlignment="Center"
                        FontSize="16"
-                       Margin="0,0,10,0"/>
+                       Margin="0,0,10,0"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
             <TextBox Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}"
                      Width="200"
                      Height="30"
                      FontSize="16"
-                     VerticalContentAlignment="Center">
+                     VerticalContentAlignment="Center"
+                     Background="{DynamicResource TextBoxBackgroundBrush}"
+                     Foreground="{DynamicResource PrimaryTextBrush}"
+                     BorderBrush="{DynamicResource TextBoxBorderBrush}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SubmitAnswerCommand}"/>
                 </TextBox.InputBindings>
@@ -115,17 +133,17 @@
 
         <!-- Feedback Message -->
         <Border Grid.Row="6"
-                BorderBrush="LightBlue"
+                BorderBrush="{DynamicResource FeedbackBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="5"
                 Padding="15"
                 Margin="0,20,0,0"
-                Background="AliceBlue"
+                Background="{DynamicResource FeedbackBackgroundBrush}"
                 Visibility="{Binding FeedbackMessage, Converter={StaticResource StringToVisibilityConverter}}">
             <TextBlock Text="{Binding FeedbackMessage}"
                        FontSize="14"
                        TextWrapping="Wrap"
-                       Foreground="DarkBlue"/>
+                       Foreground="{DynamicResource FeedbackTextBrush}"/>
         </Border>
 
         <!-- Loading Indicator -->
@@ -136,7 +154,7 @@
                     Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBlock Text="Loading..."
                        FontSize="12"
-                       Foreground="Gray"/>
+                       Foreground="{DynamicResource SecondaryTextBrush}"/>
             </StackPanel>
         </Grid>
     </Grid>

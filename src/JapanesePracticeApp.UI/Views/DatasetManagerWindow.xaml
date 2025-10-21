@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Dataset Manager" Height="700" Width="1000"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackgroundBrush}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,10 +20,11 @@
                        FontSize="24"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
-                       Margin="0,0,0,10"/>
+                       Margin="0,0,0,10"
+                       Foreground="{DynamicResource PrimaryTextBrush}"/>
             <TextBlock Text="Manage your vocabulary items without editing JSON files directly"
                        FontSize="12"
-                       Foreground="Gray"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
                        HorizontalAlignment="Center"/>
         </StackPanel>
 
@@ -35,14 +37,17 @@
             </Grid.ColumnDefinitions>
 
             <!-- Left Panel - Week Selection -->
-            <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,5,0">
+            <Border Grid.Column="0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,5,0" Background="{DynamicResource PanelBackgroundBrush}">
                 <StackPanel>
-                    <TextBlock Text="Weeks" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <TextBlock Text="Weeks" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="{DynamicResource PrimaryTextBrush}"/>
 
                     <ListBox ItemsSource="{Binding AvailableWeeks}"
                              SelectedItem="{Binding SelectedWeek}"
                              Height="400"
-                             Margin="0,0,0,10">
+                             Margin="0,0,0,10"
+                             Background="{DynamicResource WindowBackgroundBrush}"
+                             Foreground="{DynamicResource PrimaryTextBrush}"
+                             BorderBrush="{DynamicResource BorderBrush}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding StringFormat='Week {0}'}" FontSize="14"/>
@@ -53,22 +58,29 @@
                     <Button Content="Create New Week"
                             Command="{Binding CreateWeekCommand}"
                             Height="30"
-                            Margin="0,5,0,0"/>
+                            Margin="0,5,0,0"
+                            Background="{DynamicResource ButtonBackgroundBrush}"
+                            Foreground="{DynamicResource ButtonForegroundBrush}"
+                            BorderBrush="{DynamicResource BorderBrush}"/>
 
                     <Button Content="Refresh"
                             Command="{Binding RefreshCommand}"
                             Height="30"
-                            Margin="0,5,0,0"/>
+                            Margin="0,5,0,0"
+                            Background="{DynamicResource ButtonBackgroundBrush}"
+                            Foreground="{DynamicResource ButtonForegroundBrush}"
+                            BorderBrush="{DynamicResource BorderBrush}"/>
                 </StackPanel>
             </Border>
 
             <!-- Middle Panel - Vocabulary Items List -->
-            <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5,0,5,0">
+            <Border Grid.Column="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5,0,5,0" Background="{DynamicResource PanelBackgroundBrush}">
                 <StackPanel>
                     <TextBlock Text="{Binding SelectedWeek, StringFormat='Vocabulary Items - Week {0}'}"
                                FontSize="16"
                                FontWeight="Bold"
-                               Margin="0,0,0,10"/>
+                               Margin="0,0,0,10"
+                               Foreground="{DynamicResource PrimaryTextBrush}"/>
 
                     <DataGrid ItemsSource="{Binding VocabularyItems}"
                               SelectedItem="{Binding SelectedItem}"
@@ -76,7 +88,10 @@
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
                               IsReadOnly="True"
-                              Height="500">
+                              Height="500"
+                              Background="{DynamicResource WindowBackgroundBrush}"
+                              Foreground="{DynamicResource PrimaryTextBrush}"
+                              BorderBrush="{DynamicResource BorderBrush}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Chinese" Binding="{Binding ChineseText}" Width="120"/>
                             <DataGridTextColumn Header="Japanese" Binding="{Binding JapaneseAnswer}" Width="150"/>
@@ -87,53 +102,69 @@
             </Border>
 
             <!-- Right Panel - Item Editor -->
-            <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5,0,0,0">
+            <Border Grid.Column="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5,0,0,0" Background="{DynamicResource PanelBackgroundBrush}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <TextBlock Text="Item Editor"
                                    FontSize="16"
                                    FontWeight="Bold"
-                                   Margin="0,0,0,15"/>
+                                   Margin="0,0,0,15"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
 
                         <!-- Chinese Text -->
-                        <TextBlock Text="Chinese Text:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="Chinese Text:" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{DynamicResource PrimaryTextBrush}"/>
                         <TextBox Text="{Binding ChineseText, UpdateSourceTrigger=PropertyChanged}"
                                  Height="30"
                                  Margin="0,0,0,10"
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center"
+                                 Background="{DynamicResource TextBoxBackgroundBrush}"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
+                                 BorderBrush="{DynamicResource TextBoxBorderBrush}"/>
 
                         <!-- Japanese Answer -->
-                        <TextBlock Text="Japanese Answer:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="Japanese Answer:" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{DynamicResource PrimaryTextBrush}"/>
                         <TextBox Text="{Binding JapaneseAnswer, UpdateSourceTrigger=PropertyChanged}"
                                  Height="30"
                                  Margin="0,0,0,10"
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center"
+                                 Background="{DynamicResource TextBoxBackgroundBrush}"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
+                                 BorderBrush="{DynamicResource TextBoxBorderBrush}"/>
 
                         <!-- Alternative Answers -->
-                        <TextBlock Text="Alternative Answers (comma-separated):" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="Alternative Answers (comma-separated):" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{DynamicResource PrimaryTextBrush}"/>
                         <TextBox Text="{Binding AlternativeAnswers, UpdateSourceTrigger=PropertyChanged}"
                                  Height="30"
                                  Margin="0,0,0,10"
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center"
+                                 Background="{DynamicResource TextBoxBackgroundBrush}"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
+                                 BorderBrush="{DynamicResource TextBoxBorderBrush}"/>
 
                         <!-- Difficulty Level -->
-                        <TextBlock Text="Difficulty Level:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="Difficulty Level:" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{DynamicResource PrimaryTextBrush}"/>
                         <ComboBox SelectedItem="{Binding DifficultyLevel}"
                                   Height="30"
-                                  Margin="0,0,0,10">
+                                  Margin="0,0,0,10"
+                                  Background="{DynamicResource ComboBoxBackgroundBrush}"
+                                  Foreground="{DynamicResource PrimaryTextBrush}"
+                                  BorderBrush="{DynamicResource TextBoxBorderBrush}">
                             <ComboBoxItem Content="Beginner"/>
                             <ComboBoxItem Content="Intermediate"/>
                             <ComboBoxItem Content="Advanced"/>
                         </ComboBox>
 
                         <!-- Hint -->
-                        <TextBlock Text="Hint:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                        <TextBlock Text="Hint:" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{DynamicResource PrimaryTextBrush}"/>
                         <TextBox Text="{Binding Hint, UpdateSourceTrigger=PropertyChanged}"
                                  Height="60"
                                  Margin="0,0,0,15"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"
-                                 VerticalScrollBarVisibility="Auto"/>
+                                 VerticalScrollBarVisibility="Auto"
+                                 Background="{DynamicResource TextBoxBackgroundBrush}"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
+                                 BorderBrush="{DynamicResource TextBoxBorderBrush}"/>
 
                         <!-- Buttons -->
                         <Button Content="{Binding AddButtonText}"
@@ -159,7 +190,10 @@
                                 Command="{Binding ClearFormCommand}"
                                 Height="30"
                                 FontSize="12"
-                                Margin="0,0,0,10"/>
+                                Margin="0,0,0,10"
+                                Background="{DynamicResource ButtonBackgroundBrush}"
+                                Foreground="{DynamicResource ButtonForegroundBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"/>
                     </StackPanel>
                 </ScrollViewer>
             </Border>
@@ -167,15 +201,15 @@
 
         <!-- Status Bar -->
         <Border Grid.Row="2"
-                BorderBrush="LightGray"
+                BorderBrush="{DynamicResource FeedbackBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="5"
                 Padding="10"
                 Margin="0,10,0,0"
-                Background="AliceBlue">
+                Background="{DynamicResource FeedbackBackgroundBrush}">
             <TextBlock Text="{Binding StatusMessage}"
                        FontSize="12"
-                       Foreground="DarkBlue"/>
+                       Foreground="{DynamicResource FeedbackTextBrush}"/>
         </Border>
     </Grid>
 </Window>

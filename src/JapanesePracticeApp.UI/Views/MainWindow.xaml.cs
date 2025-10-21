@@ -3,6 +3,7 @@ using System.Windows;
 using JapanesePracticeApp.UI.ViewModels;
 using JapanesePracticeApp.Core.Services;
 using JapanesePracticeApp.Infrastructure.Services;
+using JapanesePracticeApp.UI.Services;
 
 namespace JapanesePracticeApp.UI;
 
@@ -41,5 +42,10 @@ public partial class MainWindow : Window
 
         // Refresh the main window after closing the dataset manager
         _ = _viewModel.InitializeAsync();
+    }
+
+    private void ToggleTheme_Click(object sender, RoutedEventArgs e)
+    {
+        ThemeManager.Instance.ToggleTheme();
     }
 }
