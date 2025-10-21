@@ -34,7 +34,7 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
    ```
 
 2. **Prepare vocabulary data**
-   - Create a `Data` directory in the project root
+   - Create a `Data` directory under src\JapanesePracticeApp.UI\
    - Add vocabulary JSON files named `week1.json`, `week2.json`, etc.
    - Each file should contain vocabulary items in the format:
      ```json
@@ -76,10 +76,9 @@ JapanesePracticeApp.UI/
 
 1. **Launch the application** - The vocabulary data will load automatically
 2. **Select a week** - Choose which week's vocabulary to practice
-3. **Click "Load Question"** - Load a random vocabulary item from the selected week
-4. **Type your answer** - Enter the Japanese translation
-5. **Click "Submit Answer"** - Check your answer and see the correct response
-6. **Repeat** - Continue practicing with new vocabulary items
+3. **Type your answer** - Enter the Japanese translation
+4. **Click Enter** - Check your answer and see the correct response
+5. **Repeat** - Continue practicing with new vocabulary items
 
 ## Development
 
