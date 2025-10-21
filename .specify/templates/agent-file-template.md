@@ -1,23 +1,39 @@
-# [PROJECT NAME] Development Guidelines
+# Project: [PROJECT NAME]
 
-Auto-generated from all feature plans. Last updated: [DATE]
+This document provides context for the AI assistant working on this project.
+
+**Last updated**: [DATE]
 
 ## Active Technologies
+
+This is the technology stack for the project.
+
 [EXTRACTED FROM ALL PLAN.MD FILES]
 
 ## Project Structure
-```
+
+A high-level overview of the project's directory structure.
+
+`
 [ACTUAL STRUCTURE FROM PLANS]
-```
+`
 
-## Commands
+## Common Commands
+
+Key commands for testing and linting.
+
+`bash
 [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES]
+`
 
-## Code Style
-[LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE]
+## Coding Conventions
+
+Follow these language-specific conventions.
+
+- [LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE]
 
 ## Recent Changes
-[LAST 3 FEATURES AND WHAT THEY ADDED]
 
-<!-- MANUAL ADDITIONS START -->
-<!-- MANUAL ADDITIONS END -->
+A log of recent features and the technologies they introduced.
+
+[LAST 3 FEATURES AND WHAT THEY ADDED]
