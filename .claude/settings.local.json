@@ -6,7 +6,8 @@
       "Bash(powershell.exe -File ./.specify/scripts/powershell/setup-plan.ps1 -Json)",
       "Bash(powershell.exe:*)",
       "Bash(cat:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1:*)"
     ],
     "deny": [],
     "ask": []
