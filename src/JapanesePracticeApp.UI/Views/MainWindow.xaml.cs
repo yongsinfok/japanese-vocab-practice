@@ -12,14 +12,15 @@ namespace JapanesePracticeApp.UI;
 public partial class MainWindow : Window
 {
     private readonly MainViewModel _viewModel;
+    private readonly IVocabularyService _vocabularyService;
 
     public MainWindow()
     {
         InitializeComponent();
 
         // Set up dependency injection manually (in a larger app, use a DI container)
-        var vocabularyService = new VocabularyService();
-        _viewModel = new MainViewModel(vocabularyService);
+        _vocabularyService = new VocabularyService();
+        _viewModel = new MainViewModel(_vocabularyService);
 
         DataContext = _viewModel;
 
@@ -30,5 +31,15 @@ public partial class MainWindow : Window
     private async Task InitializeAsync()
     {
         await _viewModel.InitializeAsync();
+    }
+
+    private void ManageDatasets_Click(object sender, RoutedEventArgs e)
+    {
+        var datasetManagerViewModel = new DatasetManagerViewModel(_vocabularyService);
+        var datasetManagerWindow = new Views.DatasetManagerWindow(datasetManagerViewModel);
+        datasetManagerWindow.ShowDialog();
+
+        // Refresh the main window after closing the dataset manager
+        _ = _viewModel.InitializeAsync();
     }
 }

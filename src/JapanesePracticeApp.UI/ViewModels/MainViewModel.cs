@@ -25,6 +25,8 @@ public class MainViewModel : ViewModelBase
     private PracticeMode _practiceMode = PracticeMode.Vocabulary;
     private int _selectedWeek = 1;
     private List<int> _availableWeeks = new List<int>();
+    private string _selectedDifficulty = "All";
+    private readonly List<string> _difficultyLevels = new List<string> { "All", "Beginner", "Intermediate", "Advanced" };
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -157,6 +159,27 @@ public class MainViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the list of available difficulty levels.
+    /// </summary>
+    public List<string> DifficultyLevels => _difficultyLevels;
+
+    /// <summary>
+    /// Gets or sets the selected difficulty level.
+    /// </summary>
+    public string SelectedDifficulty
+    {
+        get => _selectedDifficulty;
+        set
+        {
+            if (SetProperty(ref _selectedDifficulty, value))
+            {
+                // Automatically load a new question when difficulty changes
+                _ = LoadNewQuestionAsync();
+            }
+        }
+    }
+
+    /// <summary>
     /// Gets the display text for the current question.
     /// </summary>
     public string QuestionDisplay
@@ -208,11 +231,12 @@ public class MainViewModel : ViewModelBase
             UserAnswer = string.Empty;
             FeedbackMessage = "Loading vocabulary...";
 
-            CurrentVocabulary = await _vocabularyService.GetRandomVocabularyItemAsync(SelectedWeek);
+            CurrentVocabulary = await _vocabularyService.GetRandomVocabularyItemAsync(SelectedWeek, SelectedDifficulty);
 
             if (CurrentVocabulary == null)
             {
-                FeedbackMessage = $"No vocabulary found for week {SelectedWeek}. Please check your data files.";
+                var difficultyMsg = SelectedDifficulty == "All" ? "" : $" with difficulty '{SelectedDifficulty}'";
+                FeedbackMessage = $"No vocabulary found for week {SelectedWeek}{difficultyMsg}. Please check your data files or select a different filter.";
                 return;
             }
 
