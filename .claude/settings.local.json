@@ -14,7 +14,8 @@
       "Bash(dotnet sln add:*)",
       "Bash(dotnet sln:*)",
       "Bash(dotnet add reference:*)",
-      "Bash(dotnet add package:*)"
+      "Bash(dotnet add package:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []
