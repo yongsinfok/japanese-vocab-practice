@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(.specify/scripts/powershell/create-new-feature.ps1:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(powershell.exe -File ./.specify/scripts/powershell/setup-plan.ps1 -Json)"
     ],
     "deny": [],
     "ask": []
