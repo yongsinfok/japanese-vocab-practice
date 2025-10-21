@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JapanesePracticeApp.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JapanesePracticeApp.UI", "src\JapanesePracticeApp.UI\JapanesePracticeApp.UI.csproj", "{0D04C7FA-4BDE-4A13-A54B-D364058B676C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A2049F3F-BE47-45F0-862C-35F2A69CE3C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JapanesePracticeApp.UnitTests", "tests\JapanesePracticeApp.UnitTests\JapanesePracticeApp.UnitTests.csproj", "{EE2A4629-BCA4-47EE-A401-451035A7B1A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +36,15 @@ Global
 		{0D04C7FA-4BDE-4A13-A54B-D364058B676C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D04C7FA-4BDE-4A13-A54B-D364058B676C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D04C7FA-4BDE-4A13-A54B-D364058B676C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2A4629-BCA4-47EE-A401-451035A7B1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2A4629-BCA4-47EE-A401-451035A7B1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2A4629-BCA4-47EE-A401-451035A7B1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2A4629-BCA4-47EE-A401-451035A7B1A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1EF87511-B964-4DDD-9F03-E72A9901D41E} = {55F38EFF-1051-40E3-907B-E47ADEC04B57}
 		{9977A46C-D7F7-4945-B678-59DB74E51D15} = {55F38EFF-1051-40E3-907B-E47ADEC04B57}
 		{0D04C7FA-4BDE-4A13-A54B-D364058B676C} = {55F38EFF-1051-40E3-907B-E47ADEC04B57}
+		{EE2A4629-BCA4-47EE-A401-451035A7B1A6} = {A2049F3F-BE47-45F0-862C-35F2A69CE3C5}
 	EndGlobalSection
 EndGlobal

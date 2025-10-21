@@ -67,18 +67,16 @@ EXPLANATION: The particle 'に' indicates the direction of movement towards a de
 Now generate a new question:";
 
         var executor = new InteractiveExecutor(_context);
-        var inferenceParams = new InferenceParams
-        {
-            Temperature = 0.7f,
-            MaxTokens = 256,
-            AntiPrompts = new[] { "\n\n", "QUESTION:", "Now generate" }
-        };
+        var inferenceParams = new InferenceParams();
 
         var responseBuilder = new System.Text.StringBuilder();
 
         await foreach (var text in executor.InferAsync(prompt, inferenceParams, cancellationToken))
         {
             responseBuilder.Append(text);
+            // Limit the response length to prevent infinite generation
+            if (responseBuilder.Length > 1000)
+                break;
         }
 
         var response = responseBuilder.ToString();
