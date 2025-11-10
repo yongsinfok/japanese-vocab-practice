@@ -19,6 +19,9 @@
     <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="#333337"/>
     <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#3E3E42"/>
     <SolidColorBrush x:Key="ButtonForegroundBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="#5E5E5E"/>
+    <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="#505055"/>
+    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="#606065"/>
 
     <!-- Menu Colors -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#2D2D30"/>
@@ -53,6 +56,101 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="#007ACC"/>
                 <Setter Property="Foreground" Value="#FFFFFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Button Style -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ButtonHoverBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource ButtonPressedBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ListBox Style -->
+    <Style TargetType="ListBox">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+    </Style>
+
+    <!-- ListBoxItem Style -->
+    <Style TargetType="ListBoxItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ButtonHoverBackgroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#007ACC"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DataGrid Style -->
+    <Style TargetType="DataGrid">
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="#404045"/>
+        <Setter Property="RowBackground" Value="Transparent"/>
+        <Setter Property="AlternatingRowBackground" Value="#252525"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+    </Style>
+
+    <!-- DataGridColumnHeader Style -->
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="#2D2D30"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="#404045"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- DataGridRow Style -->
+    <Style TargetType="DataGridRow">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#333337"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#007ACC"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DataGridCell Style -->
+    <Style TargetType="DataGridCell">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
